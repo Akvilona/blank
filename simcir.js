@@ -8,7 +8,9 @@
 // Licensed under the MIT license:
 //  http://www.opensource.org/licenses/mit-license.php
 //
-
+// описание всех элементов SVG
+// https://svgjs.dev/docs/3.0/shape-elements/
+//
 // includes following device types:
 //  In
 //  Out
@@ -866,6 +868,7 @@ simcir.$ = (function () {
     return { x: x, y: y };
   };
 
+  // при перемещение элемента функция меняет css c style="pointer-events: visiblepainted"; на style="pointer-events: none"
   var enableEvents = function ($o, enable) {
     $o.css("pointer-events", enable ? "visiblePainted" : "none");
   };
@@ -1198,6 +1201,7 @@ simcir.$ = (function () {
         device.getOutputs().length
       );
       return {
+        // устанавливаем размер объекта
         width: unit * 2,
         height: unit * Math.max(2, device.halfPitch ? (nodes + 1) / 2 : nodes),
       };
@@ -1323,9 +1327,11 @@ simcir.$ = (function () {
     }
   };
 
+  // схема построения
   var buildCircuit = function (data, headless, scope) {
-    var $devices = [];
-    var $devMap = {};
+    var $devices = []; // устройства
+    var $devMap = {}; // Карта разработки
+    // получить узел
     var getNode = function (path) {
       if (!path.match(/^(\w+)\.(in|out)([0-9]+)$/g)) {
         throw "unknown path:" + path;
@@ -1544,10 +1550,12 @@ simcir.$ = (function () {
     };
   };
 
+  // создать пользовательский макет устройства Ref Factory
   var createCustomLayoutDeviceRefFactory = function (data) {
     return function (device) {
+      // схема построения
       var $devs = buildCircuit(data, true, {});
-      var $ports = [];
+      var $ports = []; // порты
       var intfs = [];
       $.each($devs, function (i, $dev) {
         var deviceDef = controller($dev).deviceDef;
@@ -1704,6 +1712,7 @@ simcir.$ = (function () {
 
   var factories = {};
   var defaultToolbox = [];
+  // функция создает визуальный объект
   var registerDevice = function (type, factory, deprecated) {
     if (typeof factory == "object") {
       if (typeof factory.layout == "object") {
@@ -1844,8 +1853,10 @@ simcir.$ = (function () {
   var createWorkspace = function (data) {
     data = $.extend(
       {
-        width: 400,
-        height: 200,
+        //        width: 400, // размер окна данных по горизонтали
+        //        height: 300, // размер окна данных по вертикали
+        width: window.innerWidth - 100,
+        height: window.innerHeight - 100,
         showToolbox: true,
         editable: true,
         toolbox: defaultToolbox,
@@ -1888,7 +1899,7 @@ simcir.$ = (function () {
     $workspace.append($defs);
 
     !(function () {
-      // fill with pin hole pattern.
+      // fill with pin hole pattern.-> заполните узором отверстия для булавок.
       var patId = getUniqueId();
       var pitch = unit / 2;
       var w = workspaceWidth - toolboxWidth;
@@ -2501,11 +2512,11 @@ simcir.$ = (function () {
 })(simcir);
 
 //
-// built-in devices
+// built-in devices -> встроенные устройства
 //
-/*
+
 !(function ($s) {
-  "use strict";
+  ("use strict");
 
   var $ = $s.$;
 
@@ -2514,6 +2525,7 @@ simcir.$ = (function () {
 
   var connectNode = function (in1, out1) {
     // set input value to output without inputValueChange event.
+    // установите входное значение на вывод без входного ValueChangeEvent.
     var in1_super_setValue = in1.setValue;
     in1.setValue = function (value, force) {
       var changed = in1.getValue() !== value;
@@ -2523,8 +2535,9 @@ simcir.$ = (function () {
       }
     };
   };
-
+  //  Создать порт фактуру
   var createPortFactory = function (type) {
+    // возвращает функцию
     return function (device) {
       var in1 = device.addInput();
       var out1 = device.addOutput();
@@ -2551,11 +2564,12 @@ simcir.$ = (function () {
     };
   };
 
+  var createJointModel = function () {};
   var createJointFactory = function () {
-    var maxFadeCount = 16;
-    var fadeTimeout = 100;
+    var maxFadeCount = 16; // максимальное количество затуханий
+    var fadeTimeout = 100; // Время затухания
 
-    var Direction = { WE: 0, NS: 1, EW: 2, SN: 3 };
+    var Direction = { WE: 0, NS: 1, EW: 2, SN: 3 }; // Направление
 
     return function (device) {
       var in1 = device.addInput();
@@ -2735,7 +2749,7 @@ simcir.$ = (function () {
   };
 
   // register built-in devices
-  $s.registerDevice("In", createPortFactory("in"));
-  $s.registerDevice("Out", createPortFactory("out"));
+  //  $s.registerDevice("In", createPortFactory("in"));
+  //  $s.registerDevice("Out", createPortFactory("out"));
   $s.registerDevice("Joint", createJointFactory());
-})(simcir);*/
+})(simcir);

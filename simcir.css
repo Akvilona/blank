@@ -49,7 +49,7 @@
 }
 
 .simcir-connector-hot {
-  /* stroke: #ff0000; */
+  stroke: #ff0000;
 }
 
 .simcir-joint-point {
@@ -129,8 +129,8 @@
   border-color: #666666;
   background-color: #ffffff;
   -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
-     -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
-          box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .simcir-dialog-title {
@@ -212,7 +212,7 @@ TABLE.simcir-doc-params-table TD {
 .simcir-doc-code {
   padding: 8px;
   -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   background-color: #f0f0f0;
 }
